@@ -8,7 +8,7 @@ fetch("liste.txt")
     // Sélectionner un mot aléatoire
     let randomIndex = Math.floor(Math.random() * wordList.length);
     const wordToGuess = wordList[randomIndex];
-    // alert(wordToGuess) Aide si on ne le trouver pas le mot
+     // alert(wordToGuess) Aide si on ne le trouver pas le mot
     // Créer le mot caché
     let wordLength = wordToGuess.length;
     let hiddenWord = "";
@@ -35,6 +35,9 @@ fetch("liste.txt")
         let guess = guessInput.value;
         if (guess.length > 1) {
             result.innerHTML = "Entrez une lettre à la fois";
+        }
+        else if (guess ==' ') {
+            result.innerHTML = `Vous avez oublié d'entrez une lettre`
         }
         else if (guess.length === 0){
             result.innerHTML = "Vous devez entrer une lettre";
@@ -96,7 +99,7 @@ fetch("liste.txt")
                     setTimeout(() => {
                         result.classList.remove("updated");
                     }, 1000);
-                    linkInput.style.display = "block";
+                     linkInput.style.display = "block";
                 } else {
                     result.innerHTML = "Continuez !";
                 }
