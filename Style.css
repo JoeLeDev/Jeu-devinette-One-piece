@@ -76,5 +76,33 @@ button:hover {
     margin-top: 10px ;  
 }
 
+@media (max-width: 768px) {
+    main {
+        min-width: auto; 
+        margin: 30px;
+    }
+    input {
+        padding: 10px 15px; 
+    }
+    #word {
+        font-size: 28px;
+    }
+    button {
+        padding: 10px; 
+    }
+    #link {
+        display: inline-block; 
+        margin: 5px;
+    }
+    img {
+        width: 150px; 
+    }
+    p {
+        font-size: 12px; 
+    }
+}
+
+
+
 
 
