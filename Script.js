@@ -19,7 +19,6 @@ fetch("liste.txt")
         // Afficher le mot caché
         document.getElementById("word").innerHTML = hiddenWord;
 
-
         let guessInput = document.getElementById("guess");
         let submitButton = document.getElementById("submit");
         let result = document.getElementById("result");
@@ -33,15 +32,22 @@ fetch("liste.txt")
         // Fonction à exécuter lors de la soumission d'une lettre
         submitButton.onclick = function () {
             let guess = guessInput.value;
+            guess = guess.toLowerCase();
+
+            if (guessedLetters.includes(guess)) {
+                result.innerHTML = "Vous avez déjà deviné cette lettre";
+                return;
+            }
             if (guess.length > 1) {
                 result.innerHTML = "Entrez une lettre à la fois";
             }
             else if (guess == ' ') {
-                result.innerHTML = `Vous avez oublié d'entrez une lettre`
+                result.innerHTML = `Vous avez oublié d'entrez une lettre`;
             }
             else if (guess.length === 0) {
                 result.innerHTML = "Vous devez entrer une lettre";
-            } else if (wordToGuess.indexOf(guess) === -1) {
+            }
+            else if (wordToGuess.indexOf(guess) === -1) {
                 chances--;
                 if (chances > 0) {
                     result.innerHTML = "Mauvaise lettre. Il vous reste " + chances + " chances.";
@@ -61,9 +67,9 @@ fetch("liste.txt")
                         newHiddenWord += hiddenWord[i];
                     }
                 }
+
                 hiddenWord = newHiddenWord;
                 document.getElementById("word").innerHTML = hiddenWord;
-
 
                 document.getElementById("word").classList.add("updated");
                 setTimeout(() => {
