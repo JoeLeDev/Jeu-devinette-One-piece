@@ -8,7 +8,7 @@ fetch("liste.txt")
         // Sélectionner un mot aléatoire
         let randomIndex = Math.floor(Math.random() * wordList.length);
         const wordToGuess = wordList[randomIndex];
-        // alert(wordToGuess) Aide si on ne le trouver pas le mot
+        // alert(wordToGuess)
         // Créer le mot caché
         let wordLength = wordToGuess.length;
         let hiddenWord = "";
@@ -34,80 +34,76 @@ fetch("liste.txt")
             let guess = guessInput.value;
             guess = guess.toLowerCase();
 
-            if (guessedLetters.includes(guess)) {
-                result.innerHTML = "Vous avez déjà deviné cette lettre";
-                return;
-            }
-            if (guess.length > 1) {
-                result.innerHTML = "Entrez une lettre à la fois";
-            }
-            else if (guess == ' ') {
-                result.innerHTML = `Vous avez oublié d'entrez une lettre`;
-            }
-            else if (guess.length === 0) {
-                result.innerHTML = "Vous devez entrer une lettre";
-            }
-            else if (wordToGuess.indexOf(guess) === -1) {
-                chances--;
-                if (chances > 0) {
-                    result.innerHTML = "Mauvaise lettre. Il vous reste " + chances + " chances.";
-                } else {
-                    result.innerHTML = "Vous avez perdu. Le mot était : " + wordToGuess;
-                    guessInput.style.display = "none";
-                    submitButton.style.display = "none";
-                    linkInput.style.display = "block";
+                if (guess.length > 1) {
+                    result.innerHTML = "Entrez une lettre à la fois";
                 }
-            } else {
-                // Mettre à jour le mot caché
-                let newHiddenWord = "";
-                for (let i = 0; i < wordLength; i++) {
-                    if (wordToGuess[i] === guess) {
-                        newHiddenWord += guess;
+                else if (guess == ' ') {
+                    result.innerHTML = `Vous avez oublié d'entrez une lettre`;
+                }
+                else if (guess.length === 0) {
+                    result.innerHTML = "Vous devez entrer une lettre";
+                }
+                else if (wordToGuess.indexOf(guess) === -1) {
+                    chances--;
+                    if (chances > 0) {
+                        result.innerHTML = "Mauvaise lettre. Il vous reste " + chances + " chances.";
                     } else {
-                        newHiddenWord += hiddenWord[i];
+                        result.innerHTML = "Vous avez perdu. Le mot était : " + wordToGuess;
+                        guessInput.style.display = "none";
+                        submitButton.style.display = "none";
+                        linkInput.style.display = "block";
+                    }
+                } else {
+                    // Mettre à jour le mot caché
+                    let newHiddenWord = "";
+                    for (let i = 0; i < wordLength; i++) {
+                        if (wordToGuess[i] === guess) {
+                            newHiddenWord += guess;
+                        } else {
+                            newHiddenWord += hiddenWord[i];
+                        }
+                    }
+
+                    hiddenWord = newHiddenWord;
+                    document.getElementById("word").innerHTML = hiddenWord;
+
+                    document.getElementById("word").classList.add("updated");
+                    setTimeout(() => {
+                        document.getElementById("word").classList.remove("updated");
+                    }, 300);
+
+
+                    if (hiddenWord === wordToGuess) {
+                        result.innerHTML = "Bonne réponse";
+                        guessInput.style.display = "none";
+                        submitButton.style.display = "none";
+                        result.classList.add("updated");
+                        setTimeout(() => {
+                            result.classList.remove("updated");
+                        }, 1000);
+                        linkInput.style.display = "block";
+                    } else {
+                        result.innerHTML = "Continuez !";
+                    }
+
+                    // Vérifier si le joueur a deviné le mot complet
+                    if (hiddenWord === wordToGuess) {
+
+                        let score = chances * 1;
+
+                        scoreDisplay.innerHTML = "Votre score : " + score;
+
+                        result.innerHTML = "GG tu as trouvé la réponse";
+                        guessInput.style.display = "none";
+                        submitButton.style.display = "none";
+                        result.classList.add("updated");
+                        setTimeout(() => {
+                            result.classList.remove("updated");
+                        }, 1000);
+                        linkInput.style.display = "block";
+                    } else {
+                        result.innerHTML = "Continuez !";
                     }
                 }
-
-                hiddenWord = newHiddenWord;
-                document.getElementById("word").innerHTML = hiddenWord;
-
-                document.getElementById("word").classList.add("updated");
-                setTimeout(() => {
-                    document.getElementById("word").classList.remove("updated");
-                }, 300);
-
-
-                if (hiddenWord === wordToGuess) {
-                    result.innerHTML = "Bonne réponse";
-                    guessInput.style.display = "none";
-                    submitButton.style.display = "none";
-                    result.classList.add("updated");
-                    setTimeout(() => {
-                        result.classList.remove("updated");
-                    }, 1000);
-                    linkInput.style.display = "block";
-                } else {
-                    result.innerHTML = "Continuez !";
-                }
-
-                // Vérifier si le joueur a deviné le mot complet
-                if (hiddenWord === wordToGuess) {
-
-                    let score = chances * 1;
-
-                    scoreDisplay.innerHTML = "Votre score : " + score;
-
-                    result.innerHTML = "GG tu as trouvé la réponse";
-                    guessInput.style.display = "none";
-                    submitButton.style.display = "none";
-                    result.classList.add("updated");
-                    setTimeout(() => {
-                        result.classList.remove("updated");
-                    }, 1000);
-                    linkInput.style.display = "block";
-                } else {
-                    result.innerHTML = "Continuez !";
-                }
             }
-        }
     })
